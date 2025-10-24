@@ -41,6 +41,7 @@ Designed to help users manage their tasks efficiently with support for filtering
 
 Project Structure:
 
+````
 todo-app/
 │
 ├─ index.html
@@ -54,12 +55,12 @@ todo-app/
 │ ├─ tasksList.js
 │ ├─ lineTask.js
 │ └─ components/
-│ ├─ header.js
-│ ├─ footer.js
-│ └─ overlay.js
+│   ├─ header.js
+│   ├─ footer.js
+│   └─ overlay.js
 └─ images/
-├─ logo/
-└─ screenshots/
+  ├─ logo/
+  └─ screenshots/
 
 ---
 
@@ -88,7 +89,7 @@ The selected theme is saved in localStorage so it persists across sessions.
 
 ```bash
    git clone https://github.com/ahmednabil22224/ToDo-app.git
-```
+````
 
 2. Navigate into the project folder:
    cd todo-app

@@ -1,0 +1,414 @@
+:root{
+    --text-color: #000;
+    --header-footer-bg: rgb(205, 150, 244);
+    --task-container-bg: #fff;
+    --empty-list-text: rgb(3, 44, 126);
+    --task-bg: #fff;
+    --task-done-bg: lime;
+    --task-hover-bg: antiquewhite;
+    --button-bg: #eee;
+    --button-text: #000;
+    --placeholder: rgb(175, 102, 242);
+    --button-mode-bg: #000;
+    --button-mode-text: #fff;
+    --task-p-color: #777;
+    --border-color: #000;
+}
+*{
+    box-sizing: border-box;
+}
+h1, h2, h3, p{
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-family: 'Roboto', sans-serif;
+    background-color: rgb(90, 188, 226);
+}
+body.dark{
+    --text-color: #fff;
+    --header-footer-bg: rgb(31, 2, 52);
+    --task-container-bg: #333;
+    --empty-list-text: violet;
+    --task-bg: #666;
+    --task-done-bg: rgb(32, 79, 32);
+    --task-hover-bg: cadetblue;
+    --button-bg: #555;
+    --button-text: #fff;
+    --placeholder: #f4e8e8;
+    --button-mode-bg: #fff;
+    --button-mode-text: #000;
+    --task-p-color: #F5F5F5;
+    --border-color: rgb(223, 226, 209);
+}
+input{
+    border: none;
+    caret-color: aqua;          
+    &:focus{ outline: #B33000 3px solid; }
+}
+button{
+    border: none;
+    cursor: pointer;
+
+    &:focus{
+        outline: #B33000 3px solid;
+    }
+}
+button.choosed-bttn:focus{ 
+    outline: #fff 3px solid; 
+    color: white; 
+    &.dark{
+        color: #000; 
+    }
+}
+
+input:focus::placeholder{
+    transition: 0.4s;
+    opacity: 0;
+}
+ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+button:has(i){
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+}
+#root{
+    position: relative;
+    max-width: 700px;
+    height: 100vh;
+    margin: auto;
+    border-radius: 8px;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    background-color: #999;
+}
+@media (max-width: 770px){
+    #root{ max-width: 500px; }
+}
+@media (max-width: 500px){
+    #root{
+        max-width: 420px;
+    }
+}
+/* -------------------Start Header----------------- */
+header{
+    /* ------------------Search Form------------------------ */
+    .search-form{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: var(--header-footer-bg);
+        color: var(--text-color);
+        padding: 10px; 
+
+        .search{
+            flex-grow: 0.6;
+            padding: 8px;
+            border-radius: 8px;
+            background-color: var(--task-bg);
+            color: var(--text-color);
+
+            &::placeholder{ color: var(--placeholder); }
+        }
+        .mode{
+            background-color: var(--button-mode-bg);
+            color: var(--button-mode-text);
+        }
+        
+    }
+    @media (max-width: 500px){
+        .search-form{
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 10px;
+            align-items: center;
+
+            input {
+                grid-column: 1 / -1; 
+                width: 100%;
+                order: 1;
+            }
+
+            button{
+                justify-self: end;
+                order: 0;
+
+                &:focus{
+                    i { color: #B33000; }
+                }
+            }
+        }
+    }
+    /* ------------------Add Form----------------- */
+    form{
+        position: relative;
+        border-bottom: 3px solid var(--border-color);
+
+        input{
+            width: 100%;
+            padding: 10px;
+            background-color: var(--task-bg);
+
+            &::placeholder{ color: var(--placeholder); }
+        }
+        button{
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: limegreen;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+    /* -------------------Navbar Buttons------------------- */
+    nav{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2px;
+        border-bottom: 3px solid var(--border-color);
+
+        button{
+            padding: 7px; 
+            background-color: var(--button-bg);   
+            color: var(--button-text);
+            font-weight: 700;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .choosed-bttn{
+            background-color: orangered !important;
+            transform: translateY(-1px);
+        }
+        button:hover:not(.choosed-bttn){
+            background-color: rgb(240, 148, 112) !important;
+            transform: translateY(-1px);
+        }
+    }
+
+    @media (max-width: 500px){
+        nav{ grid-template-columns: repeat(2, 1fr); }
+    }
+} 
+/* ------------------------End Header------------------------------ */
+/* ---------------------Start Tasks List--------------------------- */
+.tasks-container{
+    background-color: var(--task-container-bg);
+    min-height: 300px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    .empty-list{
+        margin: auto;
+        text-align: center;
+        font-size: 30px;
+        color: var(--empty-list-text);
+
+        i{
+            margin: 0 auto 15px;
+            cursor: default;
+            color: var(--empty-list-text);
+        }
+    }
+    .task{
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: var(--task-bg);
+        color: var(--text-color);
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgb(0 0 0 /0.6);
+        transition: 0.5s;
+
+        &:hover{
+            scale: 1.03;
+            background-color: var(--task-hover-bg);
+        }
+        .info h2{
+            overflow: hidden;
+            text-wrap: nowrap;
+            text-overflow: ellipsis;
+        }
+        .info p{
+            margin: 15px 0 0;
+            color: var(--task-p-color);
+            font-size: 15px;
+        }
+        .control{ display: flex; gap: 10px; }
+        .control .update-task{ background-color: blue; }
+        .control .complete-bttn, .control .delete-task{ background-color: brown; }
+        .control .complete{ background-color: green; }
+        .control .important-bttn{ background-color: rgb(60, 195, 228); color: #fff; }
+        .control .important{ color: yellow}
+    }
+    .done-task{ background-color: var(--task-done-bg); &:hover{ background-color: #28a745;}} 
+    @media (max-width: 500px){
+        .task{
+            flex-direction: column;
+            text-align: center;
+            padding: 15px;
+
+            .info p{  margin: 10px; }
+        }  
+    }
+}
+/* --------------End Tasks List-------------- */
+/* -------------Start Footer----------------- */
+.footer{
+    justify-content: space-between;
+    background-color: var(--header-footer-bg);
+    color: var(--text-color);
+    
+
+    .progress{
+        position: relative;
+        background-color: #fff;
+        color: #000;
+        width: 100%;
+        height: 20px;
+
+        .text-bar, .bar{
+            position: absolute;
+            width: 100%;
+            height: 16px;
+            left: 0;
+            top: 2px;
+        }
+
+        .text-bar{
+            z-index: 10;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 700;
+        }
+        .bar{ background-color: #45e452; }
+    }
+
+    .content{
+        padding: 10px;
+        display: flex;
+
+        div{
+            flex-grow: 1;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            align-items: center;
+
+            p{ font-weight: 700; }
+        }
+        .delete-complete{
+            color: red;
+            font-size: 20px;
+            margin: auto 0px auto 10px;
+        }
+        @media (max-width: 770px){
+            div{ grid-template-columns: repeat(2,1fr); }
+        }
+    }
+    .toast {
+        position: fixed;
+        bottom: 0px;
+        right: 50%;
+        transform: translate(50%, -50%);
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 14px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.5s ease;
+        z-index: 9999;
+        color: #fff;
+
+        &.success { background: #28a745; }
+        &.error   { background: #dc3545; }
+        &.warning   { background: #ffc107; color: #000; }
+        &.info   { background: #17a2b8; }
+
+        &.show { opacity: 1; pointer-events: auto; }
+    }
+}
+/* ----------------End Footer--------------------- */
+/*   ----------Start Overlay Message-------------      */
+.over-lay-box{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0 0 0 / 0.8);
+    top: 0;
+    left: 0;
+
+    .over-lay-message{
+        padding: 20px;
+        position: absolute;
+        width: 80%;
+        background-color: #c9e3e8;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 15px;
+        font-size: 30px;
+        color: #000000;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+
+        h3{
+            text-align: center;
+            overflow: hidden;
+            text-wrap: nowrap;
+            text-overflow: ellipsis;
+
+            .title-span{
+                display: block;
+                color: blueviolet;
+            }
+        }
+        input{
+            align-self: center;
+            font-size: 20px;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 8px;
+            width: 95%;
+        }
+        div{
+            display: flex;
+            justify-content: space-evenly;
+            margin-top: 20px;
+
+            button{
+                border: 2px solid #000000;
+                border-radius: 8px;
+                padding: 3px 20px;
+                font-size: 26px;
+
+                &:hover{
+                    transition: 0.3s;
+                    background-color: lime;
+                    border-color: lime;
+                    color: #fff;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
+/* ----------End Overlay Message-----------*/
+
+
+ 

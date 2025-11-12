@@ -7,7 +7,7 @@ Designed to help users manage their tasks efficiently with support for filtering
 
 🚀 Live Demo
 
-👉 https://github.com/ahmednabil22224/ToDo-app.git
+👉 [https://github.com/ahmednabil22224/ToDo-app.git](https://ahmednabil22224.github.io/ToDo-app/)
 
 ---
 

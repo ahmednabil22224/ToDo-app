@@ -1,8 +1,7 @@
 import { lineTask } from "./lineTask.js";
 import { getStorage, saveInStorage } from "./storageData.js";
 import { overlayBox1, showToast } from "./components/overLay.js";
-import { getProgressBar } from "./components/footer.js";
-// import { renderFooterCounts, renderEmptyListTasks } from "./app.js";
+import { getProgressBar, renderFooterCounts } from "./components/footer.js";
 
 function tasksList() {
   const tasks = getStorage();

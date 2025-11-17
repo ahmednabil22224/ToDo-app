@@ -149,5 +149,9 @@ images/lighthouse-report.png
 
 ### 📱 Mobile
 
-![Mobile Screenshot](./images/preview-dark-mobile.png)
-![Mobile Screenshot](./images/preview-light-mobile.png)
+<div align="center">
+  <img src="./images/preview-dark-mobile.png" width="400" alt="Mobile Screenshot" />
+</div>
+<div align="center">
+  <img src="./images/preview-light-mobile.png" width="400" alt="Mobile Screenshot" />
+</div>
